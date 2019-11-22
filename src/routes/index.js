@@ -15,7 +15,7 @@ class Routes {
 
   setRoutes() {
     this.router.get('/banks', UserController.show)
-    this.router.post('/banks', UserController.store)
+    this.router.post('/banks/:id', UserController.store)
   }
 
   getRouter() {

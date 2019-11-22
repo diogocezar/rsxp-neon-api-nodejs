@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, DataTypes) => queryInterface.createTable('users', {
+  up: (queryInterface, DataTypes) => queryInterface.createTable('banks', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -10,24 +10,23 @@ module.exports = {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    email: {
+    image: {
       allowNull: false,
       type: DataTypes.STRING,
-      unique: true,
     },
-    password_hash: {
+    rating: {
       allowNull: false,
       type: DataTypes.STRING,
     },
     created_at: {
       allowNull: false,
       type: DataTypes.DATE,
-      // defaultValue: DataTypes.literal('NOW()'),
+      defaultValue: DataTypes.literal('NOW()'),
     },
     updated_at: {
       allowNull: false,
       type: DataTypes.DATE,
     },
   }),
-  down: queryInterface => queryInterface.dropTable('users'),
+  down: queryInterface => queryInterface.dropTable('banks'),
 }

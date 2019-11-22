@@ -35,7 +35,4 @@
       "never"
     ]
   },
-  "settings": {
-    "import/resolver": "module-alias"
-  }
 }
