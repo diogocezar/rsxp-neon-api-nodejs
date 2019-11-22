@@ -2,10 +2,7 @@ const express = require('express')
 
 const routes = express.Router()
 
-const { UserController, UserValidator } = require('../controllers/UserController')
-const PaymentLinksController = require('../controllers/PaymentLinksController')
-const SessionController = require('../controllers/SessionController')
-const { auth } = require('../middlewares/JwtMiddleware')
+const BanksController = require('../controllers/BanksController')
 
 class Routes {
   constructor() {
@@ -14,8 +11,8 @@ class Routes {
   }
 
   setRoutes() {
-    this.router.get('/banks', UserController.show)
-    this.router.post('/banks/:id', UserController.store)
+    this.router.get('/banks', BanksController.show)
+    this.router.post('/banks/:id', BanksController.rating)
   }
 
   getRouter() {
