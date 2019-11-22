@@ -1,14 +1,20 @@
+/* eslint-disable */
+
 const Sequelize = require('sequelize')
 const config = require('../config/database')
-const UserModel = require('./User')
-// const PaymentLinksModel = require('./PaymentLinks')
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config)
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config,
+)
 
 const models = {
-  User: UserModel.init(sequelize, Sequelize),
-  // PaymentLinks: PaymentLinksModel.init(sequelize, Sequelize),
+  Bank: require('../models/Bank'),
 }
+
+Object.values(models).forEach(model => model.init(sequelize))
 
 Object.values(models)
   .filter(model => typeof model.associate === 'function')

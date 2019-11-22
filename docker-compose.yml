@@ -7,8 +7,8 @@ services:
     volumes:
       - ./database:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=123
-      - MYSQL_DATABASE=database_development
+      - MYSQL_ROOT_PASSWORD=rsxp2019@@
+      - MYSQL_DATABASE=rsxp-neon-api-nodejs
   app:
     image: phpmyadmin/phpmyadmin:latest
     links:
