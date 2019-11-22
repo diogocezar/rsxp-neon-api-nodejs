@@ -9,6 +9,8 @@ const routes = require('./routes')
 class App {
   constructor() {
     this.app = express()
+    this.app.use(cors())
+    this.app.use(express.json())
     this.routes()
   }
 

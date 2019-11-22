@@ -14,7 +14,11 @@ class Bank extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        image: {
+        code: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        icon: {
           type: DataTypes.STRING,
           allowNull: false,
         },

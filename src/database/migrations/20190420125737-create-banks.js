@@ -10,7 +10,11 @@ module.exports = {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    image: {
+    code: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    icon: {
       allowNull: false,
       type: DataTypes.STRING,
     },
