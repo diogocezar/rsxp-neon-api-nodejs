@@ -1,4 +1,4 @@
-const { sequelize } = require('@/models')
+const { sequelize } = require('../../src/models')
 
 const models = Object.values(sequelize.models).reverse()
 
