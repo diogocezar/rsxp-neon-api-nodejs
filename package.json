@@ -8,7 +8,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js --ignore tests",
     "pretest": "NODE_ENV=test sequelize db:migrate",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest --detectOpenHandles",
     "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all"
