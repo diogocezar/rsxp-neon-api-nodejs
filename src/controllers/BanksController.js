@@ -6,6 +6,7 @@ class BanksController {
     try {
       const banks = await Bank.findAll()
       const promises = banks.map(async item => ({
+        id: item.id,
         name: item.name,
         icon: item.icon,
         code: item.code,
@@ -30,7 +31,7 @@ class BanksController {
   }
 
   static async extractMyRating(idUser, idBank) {
-    const [databaseRating] = await Rating.findAll({ where: { idUser, idBank } })
+    const [databaseRating] = await Rating.findAll({ where: { idUser, idBank }, order: [['created_at', 'DESC']] })
     if (!databaseRating) return 0
     return databaseRating.rating
   }
