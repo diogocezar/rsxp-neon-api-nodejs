@@ -159,3 +159,171 @@ PORT=3333
 
 Notamos que estamos trabalhando com 2 ambientes diferentes, isso para que seja possível subir um banco de dados "estragável" apenas para testar as funcionalidades com o Jest.
 
+## Tá... mas o que vamos vamos fazer?
+
+A idéia é criar a uma funcionalidade simples, para que seja possível listar os bancos e classificá-los.
+
+### Listando os bancos
+
+Precisaremos criar uma rota /banks que deverá obter uma estrutura parecida com o a seguinte:
+
+```
+[
+  {
+    "id": 1,
+    "name": "Neon",
+    "icon": "neon.png",
+    "code": 655,
+    "generalRating": 3,
+    "myRating": 5
+  },
+  {
+    "id": 2,
+    "name": "Banco Vestido",
+    "icon": "banco-vestido.png",
+    "code": 213,
+    "generalRating": 0,
+    "myRating": 0
+  },
+  {
+    "id": 3,
+    "name": "D7",
+    "icon": "d7.png",
+    "code": 122,
+    "generalRating": 0,
+    "myRating": 0
+  },
+  {
+    "id": 4,
+    "name": "Banco Grêmio",
+    "icon": "banco-gremio.png",
+    "code": 123,
+    "generalRating": 3,
+    "myRating": 3
+  },
+  {
+    "id": 5,
+    "name": "Box Bank",
+    "icon": "box-bank.png",
+    "code": 425,
+    "generalRating": 0,
+    "myRating": 0
+  },
+  {
+    "id": 6,
+    "name": "Lento Bank",
+    "icon": "lento-bank.png",
+    "code": 345,
+    "generalRating": 0,
+    "myRating": 0
+  },
+  {
+    "id": 7,
+    "name": "Lento Bank",
+    "icon": "lento-bank.png",
+    "code": 345,
+    "generalRating": 0,
+    "myRating": 0
+  }
+]
+```
+
+- id - é o id do banco;
+- name - é o nome do banco;
+- icon - é o ícone do banco;
+- code - é o código do banco;
+- generalRating - é um campo que deve ser calculado, ou seja, deverá pegar a média de todas as classificações dos bancos e retonar qual é a média daquele banco;
+- myRating - é a minha classificação para aquele banco, deve-se trazer sempre a última classificação!
+
+É importante neste caso, enviar pelo HEADER uma variável id_user para que seja possível saber a sua própria classificação para a consulta.
+
+### Salvando o ranking
+
+Este é um processo mais simples, e para isso vamos apenas receber um corpo de um POST com:
+
+```
+{
+	"idUser" : 1,
+	"idBank" : 4,
+	"rating" : 3
+}
+```
+
+E retornar
+
+```
+{
+  "success": true
+}
+```
+
+ou
+
+```
+{
+  "error": true
+}
+```
+
+## E os testes?
+
+Sempre que possível, pode ser interessante aplicar a técnica de TDD, ou seja, criar os testes primeiro, antes mesmo da sua aplicação existir.
+
+O nosso cérebro está preparado para criar coisas complexas a partir de coisas mais simples.
+
+E isso pode ser um ótimo caminho para ser trilhado também no desenvolvimento.
+
+Inicie criando os testes da sua aplicação.
+
+E faça com que a sua aplicação, apenas resolva o que for necessário para passar nos testes!
+
+Em seguida, começe e implementar cada uma das funcionalidades. Até que todo o sistema esteja pronto.
+
+Vamos criar os testes!
+
+## Agora é a hora de por a mão na massa!
+
+Com os testes definidos e os mocks passando, precisamos realizar as implementações!
+
+Notem que o objetivo aqui não é ser o mais performático ou elegante, e sim mostrar os conceitos reais das implementações do nosso dia a dia.
+
+Vamos nessa!
+
+## Tá... mas e quais são as sacadas?
+
+1) Onde ficam as regras de negócios?
+  - Model?
+  - Controller?
+
+2) Assumindo que ela fique no controller, como fazer para acessar um método interno?
+  - this.??? não funciona, pq?
+  - solução? usar métodos státicos...
+
+3) Quais problemas tivemos com a regra de negócios na controller?
+  - Reaproveitamento de código muito ineficiente;
+  - Solução: Camadas adicionais Service e Repository;
+
+4) Como executar um map que possui awaits?
+  Promise.all é o seu grande aliado;
+
+5) try... e catch... salvam o seu projeto;
+
+6) Padronizações das formas de retorno (erro, sucesso, etc...)
+  - Defina um padrão, e o siga até a morte!
+
+7) Não ignore o poder dos códigos HTTP;
+
+8) Existem várias formas de testar, o importante é que ela exista!
+  - Neste caso, usamos um banco fake para estragar.
+  - Nem sempre isso é possível.
+    - Testes unitários devem estar preparados para testar de forma mocada;
+    - Testes de integração, devem testar toda a integração do sistema;
+
+9) Não reinvente a roda na hora de testar!
+  - Existem várias boas libs no mercado, utilize-as!
+  - Algumas que já utilizados:
+    - supertest;
+    - nock;
+    - sequelize-mock;
+    - faker;
+    - factory-girl;
