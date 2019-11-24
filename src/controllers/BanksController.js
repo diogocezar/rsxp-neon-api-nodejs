@@ -2,13 +2,15 @@ const { Bank, Rating } = require('../models')
 
 class BanksController {
   async show(req, res) {
+    const { id_user: idUser } = req.headers
     try {
       const banks = await Bank.findAll()
       const promises = banks.map(async item => ({
         name: item.name,
         icon: item.icon,
         code: item.code,
-        rating: await BanksController.extractRating(item.id),
+        generalRating: await BanksController.extractRating(item.id),
+        myRating: await BanksController.extractMyRating(idUser, item.id),
       }
       ))
       const jsonReturn = await Promise.all(promises)
@@ -25,6 +27,12 @@ class BanksController {
     const { rating: sumRatings } = databaseRating.reduce((oldValue, newValue) => ({ rating: oldValue.rating + newValue.rating }))
     const avgRatings = Math.round(sumRatings / databaseRating.length)
     return avgRatings
+  }
+
+  static async extractMyRating(idUser, idBank) {
+    const [databaseRating] = await Rating.findAll({ where: { idUser, idBank } })
+    if (!databaseRating) return 0
+    return databaseRating.rating
   }
 }
 

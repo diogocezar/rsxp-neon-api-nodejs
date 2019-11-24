@@ -18,7 +18,7 @@ module.exports = {
     },
     id_user: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
     },
     rating: {
       allowNull: false,
