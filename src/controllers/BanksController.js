@@ -1,20 +1,6 @@
-const { Bank } = require('../models')
+const { Bank, Rating } = require('../models')
 
 class BanksController {
-  async rating(req, res) {
-    try {
-      const { id } = req.params
-      const { rating } = req.body
-      if (!id || !rating) throw new Error('Id or Rating is missing.')
-      const result = await Bank.update({ rating }, { where: { id } })
-      if (result) { return res.status(200).json({ success: true }) }
-      throw new Error('Error trying to update rating.')
-    } catch (err) {
-      console.log(err)
-      return res.status(500).json({ error: true })
-    }
-  }
-
   async show(req, res) {
     try {
       const banks = await Bank.findAll()
@@ -23,6 +9,11 @@ class BanksController {
       console.log(err)
       return res.status(500).json({ error: true })
     }
+  }
+
+  async extractRating(idBank) {
+    const databaseRating = Rating.findAll({ where: { idBank } })
+    const rating = rating.reduce((item => ))
   }
 }
 

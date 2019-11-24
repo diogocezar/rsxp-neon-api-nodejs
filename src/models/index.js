@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
 
 const models = {
   Bank: require('../models/Bank'),
+  Ranting: require('../models/Ranting'),
 }
 
 Object.values(models).forEach(model => model.init(sequelize))
