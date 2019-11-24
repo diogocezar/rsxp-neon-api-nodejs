@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 
-class Ranting extends Model {
+class Rating extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -30,10 +30,10 @@ class Ranting extends Model {
       },
       {
         sequelize,
-        tableName: 'rantings',
+        tableName: 'ratings',
       },
     )
   }
 }
 
-module.exports = Ranting
+module.exports = Rating
