@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, DataTypes) => queryInterface.createTable('rantings', {
+  up: (queryInterface, DataTypes) => queryInterface.createTable('ratings', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -22,7 +22,7 @@ module.exports = {
     },
     rating: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
     },
     created_at: {
       allowNull: false,

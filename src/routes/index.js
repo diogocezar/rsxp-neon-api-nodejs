@@ -13,7 +13,7 @@ class Routes {
 
   setRoutes() {
     this.router.get('/banks', BanksController.show)
-    this.router.post('/ratings', BanksController.rating)
+    this.router.post('/ratings', RatingsController.create)
   }
 
   getRouter() {
