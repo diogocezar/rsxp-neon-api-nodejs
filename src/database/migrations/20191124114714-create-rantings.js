@@ -1,20 +1,26 @@
 module.exports = {
-  up: (queryInterface, DataTypes) => queryInterface.createTable('banks', {
+  up: (queryInterface, DataTypes) => queryInterface.createTable('rantings', {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    name: {
+    id_bank: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: {
+          tableName: 'banks',
+        },
+        key: 'id',
+      },
       allowNull: false,
-      type: DataTypes.STRING,
     },
-    code: {
+    id_user: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    icon: {
+    rating: {
       allowNull: false,
       type: DataTypes.STRING,
     },
@@ -28,5 +34,5 @@ module.exports = {
       type: DataTypes.DATE,
     },
   }),
-  down: queryInterface => queryInterface.dropTable('banks'),
+  down: queryInterface => queryInterface.dropTable('ratings'),
 }

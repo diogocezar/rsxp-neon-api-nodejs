@@ -3,6 +3,7 @@ const express = require('express')
 const routes = express.Router()
 
 const BanksController = require('../controllers/BanksController')
+const RatingsController = require('../controllers/RatingsController')
 
 class Routes {
   constructor() {
@@ -12,7 +13,7 @@ class Routes {
 
   setRoutes() {
     this.router.get('/banks', BanksController.show)
-    this.router.post('/banks/:id', BanksController.rating)
+    this.router.post('/ratings', BanksController.rating)
   }
 
   getRouter() {
