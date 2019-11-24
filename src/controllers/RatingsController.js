@@ -3,7 +3,8 @@ const { Rating } = require('../models')
 class RatingsController {
   async create(req, res) {
     try {
-      const { idUser, idBank, rating } = req.body
+      const { id_user: idUser } = req.headers
+      const { idBank, rating } = req.body
       if (!idUser || !idBank || !rating) { throw new Error('Missing entry properties.') }
       const result = await Rating.create({
         idUser,
