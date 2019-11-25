@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 
-class Bank extends Model {
+class Rating extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -10,25 +10,30 @@ class Bank extends Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        name: {
-          type: DataTypes.STRING,
+        idBank: {
+          type: DataTypes.INTEGER,
+          field: 'id_bank',
           allowNull: false,
+          references: {
+            model: 'banks',
+            key: 'id',
+          },
         },
-        code: {
+        idUser: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        icon: {
-          type: DataTypes.STRING,
+        rating: {
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
       },
       {
         sequelize,
-        tableName: 'banks',
+        tableName: 'ratings',
       },
     )
   }
 }
 
-module.exports = Bank
+module.exports = Rating
