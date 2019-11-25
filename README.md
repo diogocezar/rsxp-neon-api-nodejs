@@ -6,11 +6,13 @@ Hoje, nós vamos focar em algumas coisas que as vezes passam desapercebidas no d
 
 Sabe? Aquele problema que aparece do nada? Um método que não funciona? Então... Vamos mostrar algumas coisas por aqui!
 
-A ideia é explorar essas dificudades em um exemplo prático e com muita mão na massa!
+A ideia é explorar essas dificudades em um exemplo prático, com muita mão na massa!
 
 ## O que vamos fazer?
 
 Vamos criar neste projeto um Back-End simples, para fornecer *Bancos* e seus respectivos *Ratings*.
+
+A idéia é simples: um usuário vê uma lista de bancos, e ele escolher uma nota para cada um ou mais bancos. Com estrelas. de 1 a 5.
 
 Uma boa maneira de começar qualquer projeto é ter em mente mais do que uma ideia, um desenho.
 
@@ -24,11 +26,11 @@ Vamos estudar essa imagem com mais calma!
 
 ## Quais tecnologias nós vamos utilizar?
 
-E e temos ai MUITAS tecnologias para escolher, qual vamos utilizar?
+Temos MUITAS tecnologias para escolher, mas... qual vamos utilizar?
 
-Aqui, vamos escolher uma stack que jah conhecemos e trabalhamos.
+Aqui, vamos escolher uma _stack_ que jah conhecemos e trabalhamos.
 
-E não muito coincidentemente, é bem parecida com o pessoal da RocketSeat.
+E não muito coincidentemente, é bem parecida com o pessoal da _RocketSeat_.
 
 Vamos lah!
 
@@ -52,7 +54,6 @@ Vamos lah!
 
 E é claro, como já vimos em MUITOS vídeos, também vamos seguir todo um guia de estilos com o ESLint e bla bla bla...
 
-
 ```
   "devDependencies": {
     "eslint": "^5.16.0",
@@ -72,9 +73,11 @@ Aqui estamos incluindo algumas bibliotecas que servirão para executar os testes
 
 - faker;
 - factory-girl;
-= supertest;
+- supertest;
 
-Para nosso ambiente local, vamos usar também a tecnologia docker, em um container com uma imagem que levanta um banco de dados MySQL.
+E algumas outras já conhecidas ;) nodemon e eslint*.
+
+Para nosso ambiente local, vamos usar também a tecnologia docker, em um container com uma imagem que levanta um banco de dados MySQL e um PhpMyAdmin.
 
 O código do docker-compose:
 
@@ -100,38 +103,43 @@ services:
       - PMA_ARBITRARY=1
 ```
 
-Note que... aqui nós definimos já a senha do banco de dados, subimos também um phpmyadmin, E também criamos um volume local, para que os dados não se percam a cada vez que o container precisar ser reiniciado.
+Note que... aqui nós definimos já a senha do banco de dados, e também criamos um volume local, para que os dados não se percam a cada vez que o container precisar ser reiniciado.
 
 Ainda temos mais alguns arquivos adicionais de configuração, que podem ser exploradores depois, com mais calma:
 
-- .editorconfig - são as definições de estilo para diferentes editores;
-- .eslintrc - definições de estilo de codificação;
-- .gitignore - remove os arquivos que não devem ir para o repositório;
-- .sequelizerc - definições de configuração do sequelize;
-- insomnia.json - endpoints que podem ser importados no insomnia para testes da API;
-- jest.config.js - as configurações do jest;
+- `.editorconfig` - são as definições de estilo para diferentes editores;
+- `.eslintrc` - definições de estilo de codificação;
+- `.gitignore` - remove os arquivos que não devem ir para o repositório;
+- `.sequelizerc` - definições de configuração do sequelize;
+- `insomnia.json` - endpoints que podem ser importados no insomnia para testes da API;
+- `jest.config.js` - as configurações do jest;
 
 ## Como está organizado o projeto?
 
 O projeto está organizado na seguinte estrutura:
 
-- tests - é a pasta onde os testes devem ser organizados;
-- database - é uma pasta que irá conter os arquivos persistidos do banco de dados;
-- design - é uma pasta com coisas de design;
-- src - é onde está toda a implementação;
-  - config - é o arquivo no qual configuramos a conexão com o banco de dados!
-  - controllers - é onde estão as nossas controllers
-  - database - possuem nossas migrations e seeders;
-  - models - são os models da aplicação;
-  - routes - são as rotas
-  - app.js - é a configuração principal do aplicativo;
-  - server.js - é a configuração do servidor que irá rodar a aplicação principal;
+- `__tests__` - é a pasta onde os testes devem ser organizados;
+  - `factories`- é a pasta para organizar as os fakes da aplicação;
+  - `helpers` - são ajudantes para trabalhar com o banco de dados;
+  - `integration` - onde estão os testes de integração;
+- `database` - é uma pasta que irá conter os arquivos persistidos do banco de dados;
+- `design` - é uma pasta com coisas de design; (AdobeXD)
+- `src` - é onde está toda a implementação;
+  - `config` - é o arquivo no qual configuramos a conexão com o banco de dados;
+  - `controllers` - é onde estão as nossas controllers;
+  - `database` - possuem nossas migrations e seeders;
+  - `models` - são os models da aplicação;
+  - `routes` - são as rotas;
+  - `app.js` - é a configuração principal do aplicativo;
+  - `server.js` - é a configuração do servidor que irá rodar a aplicação principal;
 
 ## Exemplos dos Envs
 
-Subir um .env nunca é uma coisa muito legal, mas nesse caso, precisamos que todos tenham os 2 ambientes:
+Subir um `.env` nunca é uma coisa muito legal, mas nesse caso, precisamos que todos tenham os 2 ambientes:
 
 ### .env
+
+São as variáveis que serão utilizadas em ambientes de desenvolvimento e produção.
 
 ```
 # DATABASE
@@ -145,6 +153,8 @@ PORT=3333
 ```
 
 ### .env.test
+
+É um env dedicado aos testes, ele serve apenas para subir um banco de dados temporário para realizar os testes.
 
 ```
 # DATABASE
@@ -165,7 +175,7 @@ A idéia é criar a uma funcionalidade simples, para que seja possível listar o
 
 ### Listando os bancos
 
-Precisaremos criar uma rota /banks que deverá obter uma estrutura parecida com o a seguinte:
+Precisaremos criar uma rota `/banks` que deverá obter uma estrutura parecida com o a seguinte:
 
 ```
 [
@@ -228,14 +238,14 @@ Precisaremos criar uma rota /banks que deverá obter uma estrutura parecida com 
 ]
 ```
 
-- id - é o id do banco;
-- name - é o nome do banco;
-- icon - é o ícone do banco;
-- code - é o código do banco;
-- generalRating - é um campo que deve ser calculado, ou seja, deverá pegar a média de todas as classificações dos bancos e retonar qual é a média daquele banco;
-- myRating - é a minha classificação para aquele banco, deve-se trazer sempre a última classificação!
+- `id` - é o id do banco;
+- `name` - é o nome do banco;
+- `icon` - é o ícone do banco;
+- `code` - é o código do banco;
+- `generalRating` - é um campo que deve ser calculado, ou seja, deverá pegar a média de todas as classificações dos bancos e retonar qual é a média daquele banco;
+- `myRating` - é a minha classificação para aquele banco, deve-se trazer sempre a última classificação!
 
-É importante neste caso, enviar pelo HEADER uma variável id_user para que seja possível saber a sua própria classificação para a consulta.
+É importante neste caso, enviar pelo `HEADER` uma variável `id_user` para que seja possível saber a sua própria classificação para a consulta.
 
 ### Salvando o ranking
 
@@ -275,11 +285,27 @@ E isso pode ser um ótimo caminho para ser trilhado também no desenvolvimento.
 
 Inicie criando os testes da sua aplicação.
 
-E faça com que a sua aplicação, apenas resolva o que for necessário para passar nos testes!
+E faça com que a sua aplicação, resolva apenas o que for necessário para passar nos testes!
 
 Em seguida, começe e implementar cada uma das funcionalidades. Até que todo o sistema esteja pronto.
 
-Vamos criar os testes!
+Prontos?
+
+Então...
+
+Vamos criar um teste, e estudar o que já temos pronto.
+
+## Precisamos fazer os testes passarem
+
+Rodando os testes, é fácil perceber que eles não vão passar.
+
+Mas podemos burlar estes sistema.
+
+Para isso, podemos implementar as funcionalidades específicas para que os testes passem!
+
+E é isso que vamos fazer.
+
+Criar mocks para os testes passarem!
 
 ## Agora é a hora de por a mão na massa!
 
@@ -291,39 +317,103 @@ Vamos nessa!
 
 ## Tá... mas e quais são as sacadas?
 
-1) Onde ficam as regras de negócios?
-  - Model?
-  - Controller?
+Tah kras! Até ai tudo bem! E o que tem de diferentes?
 
-2) Assumindo que ela fique no controller, como fazer para acessar um método interno?
-  - this.??? não funciona, pq?
-  - solução? usar métodos státicos...
+Pode parecer um exemplo simples, mas... nós já passamos por MUITA coisa.
 
-3) Quais problemas tivemos com a regra de negócios na controller?
-  - Reaproveitamento de código muito ineficiente;
-  - Solução: Camadas adicionais Service e Repository;
+Vamos discutir alguns dos pontos que nós tivemos que aprender na raça!
 
-4) Como executar um map que possui awaits?
-  Promise.all é o seu grande aliado;
+### Onde ficam as regras de negócios?
 
-5) try... e catch... salvam o seu projeto;
+Essa é uma confusão clássica da comunidade, a regra fica nas models ou nas controllers?
 
-6) Padronizações das formas de retorno (erro, sucesso, etc...)
-  - Defina um padrão, e o siga até a morte!
+Neste caso, não poderíamos trabalhar com alguns campos virtuais calculados?
 
-7) Não ignore o poder dos códigos HTTP;
+Mas afinal? Onde deixar a regra de negócios?
 
-8) Existem várias formas de testar, o importante é que ela exista!
-  - Neste caso, usamos um banco fake para estragar.
-  - Nem sempre isso é possível.
-    - Testes unitários devem estar preparados para testar de forma mocada;
-    - Testes de integração, devem testar toda a integração do sistema;
+Model?
 
-9) Não reinvente a roda na hora de testar!
-  - Existem várias boas libs no mercado, utilize-as!
-  - Algumas que já utilizados:
-    - supertest;
-    - nock;
-    - sequelize-mock;
-    - faker;
-    - factory-girl;
+Controller?
+
+Pois então, na nossa solução. Isso também foi difícil de entender. E acabamos chegando em um modelo um pouco mais complexo, que trabalha com mais algumas camadas: Service e Repository.
+
+Dessa forma desacoplamos a controller da regra de negócios, e a regra de negócios do banco de dados.
+
+#### Assumindo que ela fique no controller, como fazer para acessar um método interno?
+
+Quando trabalhamos com o `express`, em uma versão com POO, (classes) quando expomos uma função temos um problema: não é possível assumir o contexto this!
+
+Então como separar possíveis funções?
+
+Para nós, uma solução foi usar métodos estáticos!
+
+#### Quais problemas tivemos com a regra de negócios na controller?
+
+Mas por que deixar as regras de negócio na própria controller não foi uma opção interessante?
+
+O reaproveitamento de código se tornea muito ineficiente.
+
+#### Como executar um map que possui awaits?
+
+Em nossa solução implementada temos um trecho de código interessante:
+
+```js
+const banks = await Bank.findAll()
+const promises = banks.map(async item => ({
+  id: item.id,
+  name: item.name,
+  icon: item.icon,
+  code: item.code,
+  generalRating: await BanksController.extractRating(item.id),
+  myRating: await BanksController.extractMyRating(idUser, item.id),
+}
+))
+const jsonReturn = await Promise.all(promises)
+return res.status(200).json(jsonReturn)
+```
+
+Notemos que promises retorna uma coleção. E como fazer para retornar só quando todos estiverem prontos? Utilizando o `Promise.all`
+
+#### Sempre previsa-se dos erros
+
+Use e abude do `try` e `catch``
+
+Mas isso foi uma jornada!
+
+Achar um padrão para retornar os erros, e a forma de como tratar isso no código foi difícil.
+
+Na nossa solução:
+
+- Criamos um middleware que trata os erros;
+- Criamos dois tipos de erros: Erros de Domínio e Erros Internos;
+- Com isso conseguimos separar e direcionar ações e mensagens para o front-end;
+
+#### Padronizações das formas de retorno (erro, sucesso, etc...)
+
+A sua API deve seguir um padrão. Mas nem tente fazer isso a cada método!
+
+A dica é: Crie uma camada que irá cuidar de tratar os erros, mensagens e API's.
+
+#### Não ignore o poder dos códigos HTTP
+
+Utilize corretamente um set de códigos de erros HTTP, eles ajudam não só o seu Front-End, mas também sistemas de monitoramento.
+
+#### Existem várias formas de testar, o importante é que ela exista!
+
+No caso deste exemplo, usamos um banco `fake` para estragar. Mas... nem sempre isso é possível.
+
+Os testes unitários devem estar mocados, para que suas funcionalidades sejam testadas independentes do do banco de dados;
+
+Os testes de integração, devem testar o máximo possível do sistema, de preferência realizando operações em banco, caches, recursos e etc;
+
+#### Não reinvente a roda!
+
+Existem várias libs prontas! Boas, e testadas.
+
+Utilize com sabedoria, entenda a necessidade do projeto e procure por um set de libs que atendam as funcionalidades.
+
+## Conclusão
+
+É isso pessoal, muito obrigado de coração pela oportunidade e pelo espaço!
+
+Estamos contratando ;)
