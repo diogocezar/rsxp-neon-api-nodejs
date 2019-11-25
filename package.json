@@ -1,8 +1,8 @@
 {
-  "name": "rscp-neon-api-nodejs",
+  "name": "rsxp-neon-api-nodejs",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:diogocezar/rscp-neon-api-nodejs.git",
+  "repository": "git@github.com:diogocezar/rsxp-neon-api-nodejs.git",
   "license": "MIT",
   "scripts": {
     "start": "node src/server.js",
