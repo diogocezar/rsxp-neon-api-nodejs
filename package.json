@@ -1,0 +1,37 @@
+{
+  "name": "rscp-neon-api-nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:diogocezar/rscp-neon-api-nodejs.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js --ignore tests",
+    "pretest": "NODE_ENV=test sequelize db:migrate",
+    "test": "NODE_ENV=test jest --detectOpenHandles",
+    "posttest": "NODE_ENV=test sequelize db:migrate:undo:all",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed:all"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "factory-girl": "^5.0.4",
+    "faker": "^4.1.0",
+    "jest": "24.9",
+    "nodemon": "1.19.2",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.7.1",
+    "sequelize-auto": "^0.4.29",
+    "sequelize-cli": "^5.5.1"
+  }
+}
